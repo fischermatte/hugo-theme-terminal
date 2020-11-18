@@ -1,9 +1,10 @@
 <nav class="menu">
   <ul class="menu__inner menu__inner--desktop">
+    {{- $firstUrlElement := print "/" (index (split .URL "/") 1) -}}
     {{ if or $.Site.Params.showMenuItems ( eq .Site.Params.showMenuItems 0 ) }}
       {{ range first $.Site.Params.showMenuItems $.Site.Menus.main }}
         {{ if not .HasChildren }}
-          <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+          <li><a class="{{if or ($.IsMenuCurrent "main" .) (eq ($firstUrlElement|lower) (.URL|lower)) }}active{{end}}"href="{{ .URL }}">{{ .Name }}</a></li>
         {{ end }}
       {{ end }}
       {{ if gt (len $.Site.Menus.main) $.Site.Params.showMenuItems }}
